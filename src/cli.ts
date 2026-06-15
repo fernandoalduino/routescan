@@ -6,6 +6,8 @@ import { collectSourceFiles } from './collector';
 import { parseRoutes } from './parser';
 import { createColorizer, shouldUseColor } from './colors';
 import { formatTerminal } from './format/terminal';
+import { writeFileSync } from 'fs';
+import { formatMarkdown } from './format/markdown';
 
 function printHelp(): void {
   console.log(`
@@ -73,8 +75,29 @@ function main(argv: string[]): void {
 
   const routes = parseRoutes(files);
 
-  const colorize = createColorizer(shouldUseColor());
-  const output = formatTerminal(routes, { colorize });
+  const writingToFile = Boolean(parsed.output);
+  const useMarkdown = parsed.format === 'markdown' || writingToFile;
+
+  let output: string;
+  if (useMarkdown) {
+    output = formatMarkdown(routes);
+  } else {
+    const colorize = createColorizer(shouldUseColor());
+    output = formatTerminal(routes, { colorize });
+  }
+
+  if (parsed.output) {
+    try {
+      writeFileSync(parsed.output, output.endsWith('\n') ? output : `${output}\n`);
+      console.log(`Wrote ${routes.length} route(s) to ${parsed.output}`);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`Error: could not write to "${parsed.output}": ${message}`);
+      process.exitCode = 1;
+    }
+    return;
+  }
+
   console.log(output);
 
 }
