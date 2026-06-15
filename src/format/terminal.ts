@@ -1,5 +1,6 @@
 import { HttpMethod, Route } from '../types';
 import { Colorize } from '../colors';
+import { sortRoutes } from './sort';
 
 const METHOD_COLORS: Record<HttpMethod, Parameters<Colorize>[1]> = {
   GET: 'green',
@@ -38,21 +39,4 @@ export function formatTerminal(routes: Route[], options: TerminalFormatOptions):
   );
 
   return `${lines.join('\n')}${summary}`;
-}
-
-function sortRoutes(routes: Route[]): Route[] {
-  const order: HttpMethod[] = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-    'HEAD',
-    'ALL',
-  ];
-  return [...routes].sort((a, b) => {
-    if (a.path !== b.path) return a.path.localeCompare(b.path);
-    return order.indexOf(a.method) - order.indexOf(b.method);
-  });
 }
