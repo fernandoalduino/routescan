@@ -4,6 +4,8 @@ import { parseArgs } from './args';
 import { VERSION } from './index';
 import { collectSourceFiles } from './collector';
 import { parseRoutes } from './parser';
+import { createColorizer, shouldUseColor } from './colors';
+import { formatTerminal } from './format/terminal';
 
 function printHelp(): void {
   console.log(`
@@ -69,22 +71,12 @@ function main(argv: string[]): void {
     return;
   }
 
-  console.log('routescan — configuration resolved:');
-  console.log(`  directory: ${parsed.directory}`);
-  console.log(`  format:    ${parsed.format}`);
-  console.log(`  output:    ${parsed.output ?? '(stdout)'}`);
-  console.log(`\nFound ${files.length} source file(s):`);
-  
   const routes = parseRoutes(files);
 
-  console.log(`Found ${files.length} source file(s), ${routes.length} route(s):\n`);
-  for (const route of routes) {
-    console.log(`${route.method.padEnd(6)} ${route.path}`);
-  }
+  const colorize = createColorizer(shouldUseColor());
+  const output = formatTerminal(routes, { colorize });
+  console.log(output);
 
-  if (routes.length === 0) {
-    console.log('No routes found.');
-  }
 }
 
 main(process.argv.slice(2));
