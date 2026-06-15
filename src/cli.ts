@@ -2,6 +2,7 @@
 
 import { parseArgs } from './args';
 import { VERSION } from './index';
+import { collectSourceFiles } from './collector';
 
 function printHelp(): void {
   console.log(`
@@ -57,12 +58,25 @@ function main(argv: string[]): void {
     return;
   }
 
-  // Placeholder: actual scanning is wired up in the next parts.
+  let files: string[];
+  try {
+    files = collectSourceFiles(parsed.directory);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`Error: ${message}`);
+    process.exitCode = 1;
+    return;
+  }
+
   console.log('routescan — configuration resolved:');
   console.log(`  directory: ${parsed.directory}`);
   console.log(`  format:    ${parsed.format}`);
   console.log(`  output:    ${parsed.output ?? '(stdout)'}`);
-  console.log('\nScanning is not implemented yet — coming in the next parts.');
+  console.log(`\nFound ${files.length} source file(s):`);
+  for (const file of files) {
+    console.log(`  ${file}`);
+  }
+  console.log('\nRoute parsing is not implemented yet — coming in the next parts.');
 }
 
 main(process.argv.slice(2));
