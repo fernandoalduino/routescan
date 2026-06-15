@@ -3,6 +3,7 @@
 import { parseArgs } from './args';
 import { VERSION } from './index';
 import { collectSourceFiles } from './collector';
+import { parseRoutes } from './parser';
 
 function printHelp(): void {
   console.log(`
@@ -73,10 +74,17 @@ function main(argv: string[]): void {
   console.log(`  format:    ${parsed.format}`);
   console.log(`  output:    ${parsed.output ?? '(stdout)'}`);
   console.log(`\nFound ${files.length} source file(s):`);
-  for (const file of files) {
-    console.log(`  ${file}`);
+  
+  const routes = parseRoutes(files);
+
+  console.log(`Found ${files.length} source file(s), ${routes.length} route(s):\n`);
+  for (const route of routes) {
+    console.log(`${route.method.padEnd(6)} ${route.path}`);
   }
-  console.log('\nRoute parsing is not implemented yet — coming in the next parts.');
+
+  if (routes.length === 0) {
+    console.log('No routes found.');
+  }
 }
 
 main(process.argv.slice(2));
