@@ -10,15 +10,17 @@
 
 Point `routescan` at your source folder and get an instant route map:
 
-\`\`\`bash
+```bash
 routescan src
-\`\`\`
+```
 
-\`\`\`text
+Output:
+
+```text
 GET    /users
 POST   /users
 DELETE /users/:id
-\`\`\`
+```
 
 ## License
 
