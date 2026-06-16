@@ -44,5 +44,14 @@
   },
   "dependencies": {
     "ts-morph": "^21.0.1"
+  },
+  "author": "Fernando P. A. Junior",
+  "homepage": "https://github.com/fernandoalduino/routescan#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandoalduino/routescan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fernandoalduino/routescan/issues"
   }
 }
