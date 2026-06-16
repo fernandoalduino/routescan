@@ -108,6 +108,23 @@ function collectRoute(
   node.routes.push({ method, path, file: filePath, line: call.getStartLineNumber() });
 }
 
+function collectFastifyRoute(
+  call: CallExpression,
+  filePath: string,
+  nodes: Map<TsSymbol, RouterNode>,
+): void {
+  // TODO: Implement Fastify route collection
+  // - Fastify uses methods such as app.get(), app.post(), etc. (similar to Express)
+  // - It also supports app.route() for handling multiple HTTP methods
+  // - Uses { prefix: '/path' } in register() instead of app.use()
+  
+  const expression = call.getExpression();
+  if (!Node.isPropertyAccessExpression(expression)) return;
+
+  const method = HTTP_METHODS[expression.getName().toLowerCase()];
+  if (!method) return;
+}
+
 function collectMount(call: CallExpression, mounts: Mount[]): void {
   const expression = call.getExpression();
   if (!Node.isPropertyAccessExpression(expression)) return;

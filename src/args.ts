@@ -10,10 +10,6 @@ export interface CliOptions {
 
 const VALID_FORMATS: OutputFormat[] = ['terminal', 'markdown'];
 
-/**
- * Parses raw CLI arguments (process.argv.slice(2)) into structured options.
- * Throws an Error with a friendly message on invalid input.
- */
 export function parseArgs(argv: string[]): CliOptions {
   const options: CliOptions = {
     format: 'terminal',

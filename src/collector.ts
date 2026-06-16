@@ -11,7 +11,6 @@ const IGNORED_DIRS = new Set([
   'out',
 ]);
 
-/** Source extensions we care about. */
 const SOURCE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs']);
 
 export interface CollectOptions {

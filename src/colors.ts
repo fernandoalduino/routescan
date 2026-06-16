@@ -1,5 +1,3 @@
-/** Minimal ANSI color helper — zero dependencies. */
-
 const CODES = {
   reset: '\x1b[0m',
   bold: '\x1b[1m',
