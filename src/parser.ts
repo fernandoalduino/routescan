@@ -108,7 +108,7 @@ function collectRoute(
   node.routes.push({ method, path, file: filePath, line: call.getStartLineNumber() });
 }
 
-function collectFastifyRoute(
+/*function collectFastifyRoute(
   call: CallExpression,
   filePath: string,
   nodes: Map<TsSymbol, RouterNode>,
@@ -123,7 +123,7 @@ function collectFastifyRoute(
 
   const method = HTTP_METHODS[expression.getName().toLowerCase()];
   if (!method) return;
-}
+}*/
 
 function collectMount(call: CallExpression, mounts: Mount[]): void {
   const expression = call.getExpression();
