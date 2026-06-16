@@ -2,20 +2,31 @@
   "name": "routescan",
   "version": "0.1.0",
   "description": "Static analysis CLI that scans Express projects and documents their routes.",
-  "keywords": ["express", "routes", "cli", "documentation", "ast", "static-analysis"],
+  "keywords": [
+    "express",
+    "routes",
+    "cli",
+    "documentation",
+    "ast",
+    "static-analysis"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "bin": {
     "routescan": "dist/cli.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/index.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build",
     "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "engines": {
     "node": ">=18"
@@ -24,6 +35,7 @@
     "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^1.6.1",
     "eslint": "^8.57.0",
     "prettier": "^3.2.0",
     "ts-node": "^10.9.2",
